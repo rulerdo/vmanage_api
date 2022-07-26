@@ -1,4 +1,4 @@
-# Import the class module and initiate an instance of it
+# Import the class module
 from modules.sdwan_manager import sdwan_manager
 
 # Provide the basic connection attributes statically
@@ -7,7 +7,7 @@ port = '443'
 username = 'devnetuser'
 password = 'RG!_Yw919_83'
 
-# Start a session to vmanage
+# Start a session to vmanage (new class instance)
 session = sdwan_manager(vmanage,port,username,password)
 
 # Test printing the cookie and token
