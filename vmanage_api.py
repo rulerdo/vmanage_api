@@ -1,11 +1,13 @@
 from modules.support_manager import load_yaml_config,get_arguments,print_tabulate,print_formatted_data,load_payload
 from modules.sdwan_manager import sdwan_manager
 
+
 __copyright__ = "Copyright (c) 2022 Raul Gomez"
 __version__   = "1.0.0"
 __author__    = "Raul Gomez"
 __email__     = "rgomezbe@cisco.com"
-__url__       = "https://wwwin-github.cisco.com/rgomezbe/vmanage_api_final"
+__url__       = "https://wwwin-github.cisco.com/rgomezbe/vmanage_api"
+
 
 if __name__ == '__main__':
 
