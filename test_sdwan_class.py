@@ -20,7 +20,11 @@ resource = '/device/monitor'
 body = {}
 
 # Send an api request
-data = session.send_request(action,resource,body)
+response = session.send_request(action,resource,body)
 
 # Print the response
-print('Response:' , data)
+print('Response Object:' , response)
+print('Response Text:' , response.text)
+print('Response DATA: ', response.json()['data'])
+print('Response Status Code:' , response.status_code)
+print('Response Method: ',response.request.method)

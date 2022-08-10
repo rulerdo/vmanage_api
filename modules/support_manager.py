@@ -2,6 +2,7 @@ from argparse import ArgumentParser
 import yaml
 from tabulate import tabulate
 import json
+import sys
 
 def get_arguments():
 
@@ -42,6 +43,37 @@ def load_payload(payload_file):
 
     return body
 
+
+def parse_request_response(response):
+
+    data = {}
+    failure = False
+    action = response.request.method
+
+    if action == 'GET':
+
+        try:
+            data = response.json()['data']
+
+        except Exception as error:
+
+            print('ERROR:',error)
+            failure = True
+
+    elif response.status_code in range (200,300):
+
+        if response.status_code == 200:
+            print(f'{action} request completed successfully')
+
+    if failure or response.status_code not in range (200,300):
+        print(f'Problems with {action} request')
+        print('URL:',response.url)
+        print('TEXT:',response.text)
+        print('STATUS CODE:',response.status_code)
+        sys.exit(1)
+
+    return data
+    
 
 def print_formatted_data(data):
 

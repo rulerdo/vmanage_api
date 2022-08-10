@@ -2,7 +2,6 @@ import requests
 from urllib3.exceptions import InsecureRequestWarning
 requests.packages.urllib3.disable_warnings(category=InsecureRequestWarning)
 from time import time
-import sys
 
 
 class sdwan_manager():
@@ -61,34 +60,8 @@ class sdwan_manager():
 
         response = requests.request(action, url, headers=headers, data=body, verify=False)
 
-        if action == 'GET':
-
-            try:
-                data = response.json()['data']
-
-            except Exception as error:
-
-                print('URL:',response.url)
-                print('TEXT:',response.text)
-                print('STATUS CODE:',response.status_code)
-                print('ERROR:',error)
-                sys.exit(1)
-
-        else:
-
-            data = []
-
-            if response.status_code == 200:
-                print(f'{action} request completed successfully')
-            
-            else:
-                print(f'{action} request not completed')
-                print('URL:',response.url)
-                print('TEXT:',response.text)
-                print('STATUS CODE:',response.status_code)
-        
-        return data    
-
+        return response
+                
 
     def logout(self):
 
@@ -106,5 +79,3 @@ class sdwan_manager():
 
         message = 'Session closed!' if response.status_code == 200 else 'Problems closing session'
         print(message)
-        
-                
