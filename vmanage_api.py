@@ -8,6 +8,12 @@ __author__    = "Raul Gomez"
 __email__     = "rgomezbe@cisco.com"
 __url__       = "https://wwwin-github.cisco.com/rgomezbe/vmanage_api"
 
+'''
+python vmanage_api.py -a GET -r '/admin/user'
+python vmanage_api.py -a POST -r '/admin/user' -p
+python vmanage_api.py -a PUT -r '/admin/user/testpost' -p
+python vmanage_api.py -a DELETE -r '/admin/user/testpost'
+'''
 
 if __name__ == '__main__':
 
@@ -24,7 +30,10 @@ if __name__ == '__main__':
     resource = args.resource
     action = args.action
     table = args.tab
-    body = load_payload(args.payload)
+    body = {}
+
+    if args.payload:
+        body = load_payload('config/payload.json') 
 
     if not resource and not table:
         resource = '/device/monitor'
