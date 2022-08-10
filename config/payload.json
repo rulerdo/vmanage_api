@@ -1,6 +1,6 @@
 {
     "group": ["netadmin"],
-    "description": "Postman Test user",
+    "description": "Test user",
     "userName": "testpost",
     "password": "cisco12345",
     "locale": "en_US",

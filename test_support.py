@@ -11,6 +11,8 @@ print(arguments)
 # Load and print the values from a YAML file
 variables = load_yaml_config('config/config.yaml')
 print(variables)
+print(variables['VMANAGE'])
+print(variables['USERNAME'])
 
 # Load and print the values from a JSON file
 body = load_payload('config/payload.json')

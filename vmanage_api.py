@@ -1,4 +1,4 @@
-from modules.support_manager import load_yaml_config,get_arguments,print_tabulate,print_formatted_data,load_payload
+from modules.support_manager import load_yaml_config,get_arguments,print_tabulate,print_formatted_data,load_payload,parse_request_response
 from modules.sdwan_manager import sdwan_manager
 
 
@@ -17,15 +17,10 @@ python vmanage_api.py -a DELETE -r '/admin/user/testpost'
 
 if __name__ == '__main__':
 
-    variables = load_yaml_config('config/config.yaml')
+    var = load_yaml_config('config/config.yaml')
     args = get_arguments()
 
-    vmanage = variables['VMANAGE']
-    port = str(variables['PORT'])
-    username = variables['USERNAME']
-    password = variables['PASSWORD']
-
-    session = sdwan_manager(vmanage,port,username,password)
+    session = sdwan_manager(var['VMANAGE'],str(var['PORT']),var['USERNAME'],var['PASSWORD'])
 
     resource = args.resource
     action = args.action
@@ -39,7 +34,8 @@ if __name__ == '__main__':
         resource = '/device/monitor'
         table = True
 
-    data = session.send_request(action,resource,body)
+    response = session.send_request(action,resource,body)
+    data = parse_request_response(response)
 
     if not bool(data):
         print('Request returned no data')
