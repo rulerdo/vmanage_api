@@ -1,4 +1,4 @@
-from modules.support_manager import load_yaml_config,get_arguments,print_tabulate,print_formatted_data,load_payload,parse_request_response
+from modules.support_manager import load_yaml_config,get_arguments,print_tabulate,print_formatted_data,load_payload,parse_request_response, get_image_from_folder
 from modules.sdwan_manager import sdwan_manager
 
 
@@ -13,6 +13,7 @@ python vmanage_api.py -a GET -r '/admin/user'
 python vmanage_api.py -a POST -r '/admin/user' -p
 python vmanage_api.py -a PUT -r '/admin/user/testpost' -p
 python vmanage_api.py -a DELETE -r '/admin/user/testpost'
+python vmanage_api.py -u'
 '''
 
 if __name__ == '__main__':
@@ -25,22 +26,25 @@ if __name__ == '__main__':
     resource = args.resource
     action = args.action
     table = args.tab
-    body = {}
-
-    if args.payload:
-        body = load_payload('config/payload.json') 
-
-    if not resource and not table:
-        resource = '/device/monitor'
-        table = True
-
-    response = session.send_request(action,resource,body)
-    data = parse_request_response(response)
-
-    if not bool(data):
-        print('Request returned no data')
+    body = load_payload('config/payload.json') if args.payload else {}
+    
+    if args.upload:
+        image = get_image_from_folder()
+        session.upload_image(image)
 
     else:
-        print_tabulate(data) if table else print_formatted_data(data)
+        
+        if not resource and not table:
+            resource = '/device/monitor'
+            table = True
+
+        response = session.send_request(action,resource,body)
+        data = parse_request_response(response)
+
+        if not bool(data):
+            print('Request returned no data')
+
+        else:
+            print_tabulate(data) if table else print_formatted_data(data)
         
     session.logout()

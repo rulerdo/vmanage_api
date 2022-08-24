@@ -6,6 +6,8 @@ Script to demonstrate the Cisco SD-WAN Controller (vManage) API usage
 
 It includes a class and functions to handle authentication process and to send basic API requests to vManage
 
+It also has the option to upload sofware images files to vmanage, files need to be saved under the images folder
+
 This repository is going to be used for training and there are some test files that are only relevant for it, if you are using the app on your own please ignore them
 
 ## Installation
@@ -37,7 +39,7 @@ Use CLI help to display the execution options
 
 There are no mandatory parameters, if none provided then it will be assumed to be a GET request, NO payload, TABLE printing and the '/device/monitor' resource
 
-Please mind that most of the POST, PUT or DELETE requests will require the use of the --payload argument
+Please mind that most of the POST, PUT or DELETE requests will require the use of the --payload argument, body to upload needs to be saved on the config/payload.json file, a sample user is saved there now as an example
 
 Pre-build print options are only available for GET requests, other methods will only display a success or fail message
 
@@ -52,7 +54,11 @@ or
 
 or
 
-    python vmanage_api.py -a POST -p payload.json -r "/admin/user"
+    python vmanage_api.py -a POST -p -r "/admin/user"
+
+or 
+
+    python vmanage_api.py -u
 
 or sample mode (NO ARGUMENTS)
 

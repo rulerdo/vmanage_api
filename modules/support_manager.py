@@ -3,6 +3,7 @@ import yaml
 from tabulate import tabulate
 import json
 import sys
+import os
 
 def get_arguments():
 
@@ -11,6 +12,7 @@ def get_arguments():
     parser.add_argument('--action', '-a', choices=['GET','POST','PUT','DELETE'], default='GET', help='HTTP method to use with the requests')
     parser.add_argument('--payload', '-p', action="store_true", help='use to include the paylod file under config/payload.json')
     parser.add_argument('--tab','-t', action="store_true", help='use to print a table format')
+    parser.add_argument('--upload', '-u', action="store_true", help='use to upload a software file from images folder to vmanage')
     arguments = parser.parse_args()
 
     return arguments
@@ -91,3 +93,40 @@ def print_tabulate(data):
     table = [element.values() for element in data]    
 
     print(tabulate(table,headers=headers,tablefmt="pretty"),'\n')
+
+
+def get_image_from_folder():
+
+    dir_list = os.listdir('./images')
+    acceptable_extensions = ('bin', 'tar', 'gz')
+    file_list = [file for file in dir_list if file.endswith(acceptable_extensions)]
+    i = 1
+
+    print('Files available on image folder:')
+    for file in file_list:
+        print(f'{i}.- {file}')
+        i += 1
+
+    while True:
+
+        user_input = input('Type the file number to upload: ')
+
+        try:
+            option = int(user_input) - 1
+            image = file_list[option]
+            break
+        
+        except ValueError:
+            print('Invalid option:')
+            print('Please try again, use the file number')
+
+        except IndexError:
+            print('Invalid option:')
+            print('Please try again, selected number out of range')
+        
+        except Exception as e:
+            print('Invalid option:')
+            print(e)
+            print('Please try again')
+
+    return image

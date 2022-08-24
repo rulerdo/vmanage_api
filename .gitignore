@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Bypass SDWAN software from images folder
+images/*
+
+# exception to the rule
+!images/.gitkeep
